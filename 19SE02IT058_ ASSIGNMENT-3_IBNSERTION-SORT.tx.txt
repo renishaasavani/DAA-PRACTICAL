@@ -1,0 +1,32 @@
+#include<stdio.h>
+int main()
+{
+	
+ 	int arr[10]={6,37,28,95,45,67,34,9,24,78};
+ 	
+	 int n=10;
+	 
+	 int i,key,j;
+	 
+	 for(i=1;i<n;i++)
+	 {
+	 	key=arr[i];
+	 	j=i-1;
+	 	
+	 	while(j>=0&&arr[j]>key)
+		 {
+		 	arr[j+1]=arr[j];
+		 	j=j-1;
+	 		
+		 }
+		 arr[j+1]=key;
+	 }
+	 
+	 printf("Sorted list in ascending order:\n");
+	 
+	 for(i=0;i<=n-1;i++)
+	 {
+	 	printf("%d\n",arr[i]);
+	 }
+	 return 0;
+}

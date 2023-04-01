@@ -1,0 +1,95 @@
+# include<stdio.h>
+
+void knapsack(int n, float weight[], float profit[], float capacity)
+{
+    float x[20], totalprofit = 0;
+    int i, j;
+
+    // First None of the item is selected so initialized to 0. When particular item is selected then x
+    //associated with that item will be updated to 1
+    for (i = 0; i < n; i++)
+    x[i] = 0.0;
+
+    //Traverse through all the items one by one
+    for (i = 0; i < n; i++)
+    {
+
+        if (weight[i] > capacity) // if item weight is more than the capacity then i can not select that particular item.
+            break;
+        else
+        {
+            x[i] = 1.0; // 1 represents item is selected
+            totalprofit = totalprofit + profit[i];
+            capacity = capacity - weight[i]; //Left capacity of knapsack after selecting any item
+        }
+    }
+
+    // If still some items are present in the item set then only we can take fraction of such item
+
+    if (i < n) //if there is no item in my itemset and knapsack has still some capacity left at that time we don't execute this block.
+        [i] = capacity / weight[i];
+
+    totalprofit = totalprofit + ((capacity/weight[i]) * profit[i]);
+
+    printf("\nThe below fraction included for Items:- ");
+    for(i = 0; i < n; i++)
+        printf("%f\t", x[i]);
+
+    printf("\nMaximum profit is:- %f", totalprofit);
+
+}
+
+int main()
+{
+    float weight[20], profit[20], capacity;
+    int num, i, j;
+    float ratio[20], temp;
+
+    printf("\nEnter the no. of objects:- ");
+    scanf("%d", &num);
+
+    printf("\nEnter the weights of each object:- ");
+    for (i = 0; i < num; i++)
+    {
+        scanf("%f", &weight[i]);
+    }
+
+    printf("\nEnter the Profits of each object:- ");
+    for (i = 0; i < num; i++)
+    {
+        scanf("%f", &profit[i]);
+    }
+
+    printf("\nEnter the capacity of knapsack:- ");
+    scanf("%f", &capacity);
+
+    for (i = 0; i < num; i++)
+    {
+        ratio[i] = profit[i] / weight[i];
+    }
+
+    //Bubble sort method to arrange item based on profit/weight ratio.(per kg profit)
+    for (i = 0; i < num; i++)
+    {
+        for (j = i + 1; j < num; j++)
+        {
+            if (ratio[i] < ratio[j])
+            {
+                temp = ratio[j];
+                ratio[j] = ratio[i];
+                ratio[i] = temp;
+
+                temp = weight[j];
+                weight[j] = weight[i];
+                weight[i] = temp;
+
+                temp = profit[j];
+                profit[j] = profit[i];
+                profit[i] = temp;
+            }
+        }
+    }
+
+    knapsack(num, weight, profit, capacity);
+    getch();
+}
